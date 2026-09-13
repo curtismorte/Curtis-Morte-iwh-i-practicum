@@ -1,28 +1,54 @@
-# Welcome to the Integrating With HubSpot I: Foundations Practicum
+# Integrating With HubSpot I: Foundations Practicum
 
-This repository is for the Integrating With HubSpot I: Foundations course. This practicum is one of two requirements for receiving your Integrating With HubSpot I: Foundations certification. You must also take the exam and receive a passing grade (at least 75%).
+Node/Express app for the Integrating With HubSpot I: Foundations certification practicum (Curtis Morte).
 
-To read the full directions, please go to the [practicum instructions](https://app.hubspot.com/academy/l/tracks/1092124/1093824/5493?language=en).
+This practicum is one of two certification requirements; the other is the Academy exam (at least 75%).
 
-**Put your HubSpot developer test account custom objects URL link here:** https://app.hubspot.com/contacts/l/objects/${custom-obj-number}/views/all/list
+## Custom object list view (developer test account)
 
-___
-## Tips:
-- Commit to your repository often. Even if you make small tweaks to your code, it’s best to be committing to your repository frequently.
-- The subject of the custom object is up to you. Feel free to get creative!
-- Please create a test account and include your private app access token in your repo.
-- Ensure you re-merge any working branches into the main branch.
-- DO NOT ADD YOUR PRIVATE APP TOKEN TO YOUR REPOSITORY. 
+Replace the placeholders below with your **developer test account** IDs after you create the custom object:
 
-## Pre-requisites:
-- Using [Node](https://nodejs.org/en/download) and node packages
-- Using [Express](https://expressjs.com/en/starter/installing.html)
-- Using [Axios](https://axios-http.com/docs/intro)
-- Using [Pug templating system](https://pugjs.org/api/getting-started.html)
-- Using the command line
-- Using [Git and GitHub](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)
+https://app.hubspot.com/contacts/<test-account-id>/objects/<custom-object-id>/views/all/list
 
-## Requirements
-- All work must be your own. During the grading process we will check the revision history. Submissions that do not meet this requirement will not be considered.
-- You must have at least two new routes in your index.js file and one new pug template for the homepage.
-- You must create a developer test account and link to it in your README.md file. Submissions that do not meet this requirement will not be considered.
+Example shape only (not a live link): `https://app.hubspot.com/contacts/12345678/objects/2-12345678/views/all/list`
+
+## Setup (developer test account)
+
+1. Create a **developer test account** (not a live CRM account).
+2. Create a private app titled **Curtis's Practicum Private App** with scopes (read and write):
+   - `crm.schemas.custom`
+   - `crm.objects.custom`
+   - `crm.objects.contacts`
+3. Create a custom object (subject: **Pets**) with at least three custom properties, including a string property **Name**, plus **Breed** and **Age**.
+4. Add at least three records and associate the custom object with contacts.
+5. Copy `.env.example` to `.env` and set:
+   - `PRIVATE_APP_ACCESS` — private app token (never commit this)
+   - `CUSTOM_OBJECT_TYPE` — custom object type ID or FQN (e.g. `2-xxxxxxxx`)
+6. Install and run:
+
+```bash
+npm install
+node index.js
+```
+
+Open http://localhost:3000 — homepage table and **Add to this table** → `/update-cobj`.
+
+**Without a token:** `GET /` and `GET /update-cobj` still respond; the homepage shows an empty table and a notice. `POST /update-cobj` requires credentials.
+
+## Routes
+
+| Method | Path | Behavior |
+|--------|------|----------|
+| GET | `/` | Table of custom object records + link to form |
+| GET | `/update-cobj` | Form titled `Update Custom Object Form \| Integrating With HubSpot I Practicum` |
+| POST | `/update-cobj` | Create record via HubSpot API, redirect to `/` |
+
+## Tips
+
+- Commit often; keep work on `working-branch`, then merge to `main` before any eventual submission.
+- **DO NOT** commit your private app token. Keep it in `.env` only (already in `.gitignore`).
+- Do not submit from Academy until authorized; repository must be a public fork named `Curtis-Morte-iwh-i-practicum`.
+
+## Full directions
+
+See the [practicum instructions](https://app.hubspot.com/academy/l/tracks/1092124/1093824/5493?language=en) in HubSpot Academy.
